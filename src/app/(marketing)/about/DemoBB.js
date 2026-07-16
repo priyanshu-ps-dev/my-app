@@ -1,2 +1,2 @@
 B ka edit of stashing
-Rebase
+Rebase and it 
