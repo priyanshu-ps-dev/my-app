@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#081120" />
-  <meta name="description" content="Promise Ledger — payment promise tracking and collections follow-up workspace." />
-  <title>Promise Ledger</title>
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <meta name="description" content="Promise Ledger — a full-stack B2B collections intelligence workspace." />
+  <title>Promise Ledger — Collections Intelligence</title>
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
   <div class="bg-orb orb-one"></div>
@@ -15,7 +15,7 @@
   <header class="mobile-header">
     <div class="brand">
       <div class="brand-mark">PL</div>
-      <div><strong>Promise Ledger</strong><span>Collections workspace</span></div>
+      <div><strong>Promise Ledger</strong><span>Collections intelligence</span></div>
     </div>
     <button class="icon-button" id="mobileAddBtn" aria-label="Add promise">＋</button>
   </header>
@@ -24,12 +24,12 @@
     <aside class="sidebar">
       <div class="brand desktop-brand">
         <div class="brand-mark">PL</div>
-        <div><strong>Promise Ledger</strong><span>Collections workspace</span></div>
+        <div><strong>Promise Ledger</strong><span>Collections intelligence</span></div>
       </div>
 
       <div class="profile-card">
         <div class="avatar">PS</div>
-        <div><strong>Priyanshu Singh</strong><span><i></i> Demo workspace</span></div>
+        <div><strong>Priyanshu Singh</strong><span><i></i> Live workspace</span></div>
       </div>
 
       <nav class="nav-list" id="desktopNav">
@@ -44,18 +44,22 @@
         <span>Collection health</span>
         <strong id="healthSidebar">0%</strong>
         <div class="mini-progress"><i id="healthBar"></i></div>
-        <p>Keep promises visible, follow up on time, close faster.</p>
+        <p id="sidebarHealthText">Keep promises visible, follow up on time, close faster.</p>
       </div>
     </aside>
 
     <main class="content">
       <section class="hero entrance">
         <div>
-          <span class="eyebrow"><i class="live-dot"></i> LIVE COLLECTION WORKSPACE</span>
+          <div class="hero-status-row">
+            <span class="eyebrow"><i class="live-dot"></i> LIVE COLLECTION WORKSPACE</span>
+            <span class="api-status connecting" id="apiStatus"><i></i><span>Connecting API…</span></span>
+          </div>
           <h1>Turn payment promises into <span>payments.</span></h1>
-          <p>Track commitments, focus on overdue accounts and keep every follow-up in one place.</p>
+          <p>A full-stack collections command center with server-backed records, risk scoring, follow-up intelligence and payment analytics.</p>
         </div>
         <div class="hero-actions">
+          <button class="secondary-btn" id="focusRiskBtn">⚡ Focus high risk</button>
           <button class="secondary-btn" id="resetBtn">Reset demo</button>
           <button class="primary-btn" id="addBtn">＋ Add promise</button>
         </div>
@@ -96,11 +100,43 @@
         </article>
       </section>
 
+      <section class="intelligence-grid entrance">
+        <article class="glass-card intelligence-card">
+          <div class="section-head">
+            <div><span class="eyebrow">RECOVERY INTELLIGENCE</span><h2>Risk engine</h2></div>
+            <span class="engine-pill">RULE-BASED</span>
+          </div>
+          <div class="intel-metrics">
+            <div><span>High-risk exposure</span><strong id="riskExposure">₹0</strong></div>
+            <div><span>Follow-up coverage</span><strong id="followupCoverage">0%</strong></div>
+            <div><span>Avg. overdue age</span><strong id="averageOverdue">0d</strong></div>
+          </div>
+          <div class="next-action" id="nextAction">
+            <span>Next best action</span>
+            <strong>Calculating priority…</strong>
+            <p>Risk scoring considers overdue age, amount and recent follow-up activity.</p>
+          </div>
+        </article>
+
+        <article class="glass-card velocity-card">
+          <div class="section-head">
+            <div><span class="eyebrow">7-DAY SIGNAL</span><h2>Collections velocity</h2></div>
+            <span class="live-pill"><i></i> API</span>
+          </div>
+          <div class="velocity-chart" id="velocityChart" aria-label="Seven day collections chart"></div>
+          <div class="chart-footer">
+            <span><i class="legend-dot collected"></i> Collected</span>
+            <span><i class="legend-dot promised"></i> New promise value</span>
+          </div>
+        </article>
+      </section>
+
       <section class="workspace-card entrance">
         <div class="workspace-toolbar">
           <div>
             <span class="eyebrow">FOLLOW-UP QUEUE</span>
             <h2 id="queueTitle">All promises</h2>
+            <span class="queue-subtitle" id="queueSubtitle">Server-backed records · synced across sessions</span>
           </div>
           <div class="toolbar-tools">
             <label class="search-field">
@@ -122,8 +158,8 @@
       </section>
 
       <footer>
-        <strong>Promise Ledger</strong>
-        <span>Responsive collections workflow demo · Vanilla JS · Local persistence</span>
+        <div><strong>Promise Ledger v2</strong><span>Node.js REST API · Risk scoring · Analytics · Responsive UI</span></div>
+        <span id="footerSync">Connecting to backend…</span>
       </footer>
     </main>
   </div>
@@ -177,6 +213,6 @@
   </dialog>
 
   <div class="toast-host" id="toastHost"></div>
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>
