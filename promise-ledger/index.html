@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Promise Ledger — track B2B payment promises, due dates, follow-ups and collections." />
+  <title>Promise Ledger</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">PL</div>
+        <div>
+          <strong>Promise Ledger</strong>
+          <span>Collections workspace</span>
+        </div>
+      </div>
+
+      <nav>
+        <button class="nav-item active" data-filter="all">Overview</button>
+        <button class="nav-item" data-filter="overdue">Overdue</button>
+        <button class="nav-item" data-filter="today">Due today</button>
+        <button class="nav-item" data-filter="upcoming">Upcoming</button>
+        <button class="nav-item" data-filter="paid">Paid</button>
+      </nav>
+
+      <div class="sidebar-note">
+        <strong>Built for small B2B teams</strong>
+        <p>Turn verbal payment promises into a clear daily follow-up queue.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">PAYMENT FOLLOW-UP DASHBOARD</p>
+          <h1>Know exactly who to follow up with today.</h1>
+        </div>
+        <button id="openModalBtn" class="primary-btn">+ Add promise</button>
+      </header>
+
+      <section class="stats" id="stats"></section>
+
+      <section class="toolbar">
+        <div class="search-wrap">
+          <input id="searchInput" type="search" placeholder="Search customer, phone or note..." />
+        </div>
+        <div class="toolbar-actions">
+          <button id="exportBtn" class="ghost-btn">Export CSV</button>
+          <label class="ghost-btn file-label">Import CSV<input id="importInput" type="file" accept=".csv" hidden /></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">FOLLOW-UP QUEUE</p>
+            <h2 id="queueTitle">All promises</h2>
+          </div>
+          <span id="recordCount" class="pill">0 records</span>
+        </div>
+
+        <div id="emptyState" class="empty hidden">
+          <div class="empty-icon">₹</div>
+          <h3>No promises here yet</h3>
+          <p>Add a payment commitment to start tracking follow-ups.</p>
+        </div>
+
+        <div id="tableWrap" class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Promise date</th>
+                <th>Status</th>
+                <th>Last follow-up</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="promiseRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="promiseModal">
+    <form id="promiseForm" method="dialog" class="modal-card">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">NEW PAYMENT PROMISE</p>
+          <h2>Record commitment</h2>
+        </div>
+        <button type="button" id="closeModalBtn" class="icon-btn">×</button>
+      </div>
+
+      <div class="form-grid">
+        <label>Customer name<input id="customer" required maxlength="80" /></label>
+        <label>Phone<input id="phone" maxlength="20" placeholder="+91..." /></label>
+        <label>Amount (₹)<input id="amount" type="number" min="1" step="1" required /></label>
+        <label>Promise date<input id="promiseDate" type="date" required /></label>
+      </div>
+      <label>Note<textarea id="note" rows="3" maxlength="300" placeholder="Invoice, reason, next step..."></textarea></label>
+
+      <div class="modal-actions">
+        <button type="button" id="cancelBtn" class="ghost-btn">Cancel</button>
+        <button type="submit" class="primary-btn">Save promise</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="historyModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">FOLLOW-UP HISTORY</p>
+          <h2 id="historyTitle">Customer</h2>
+        </div>
+        <button type="button" id="closeHistoryBtn" class="icon-btn">×</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+      <form id="historyForm" class="history-form">
+        <textarea id="historyNote" rows="3" required maxlength="300" placeholder="Called customer; they committed to pay by Friday..."></textarea>
+        <button class="primary-btn" type="submit">Add follow-up note</button>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
