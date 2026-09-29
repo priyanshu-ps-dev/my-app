@@ -1,8 +1,8 @@
 {
   "name": "promise-ledger",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "B2B payment promise and follow-up tracker",
+  "description": "Full-stack B2B collections intelligence workspace",
   "scripts": {
     "start": "node server.js"
   },
