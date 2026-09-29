@@ -3,69 +3,157 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Promise Ledger — track B2B payment promises, due dates, follow-ups and collections." />
-  <title>Promise Ledger</title>
+  <meta name="description" content="Promise Ledger — a polished B2B payment promise and collections dashboard." />
+  <meta name="theme-color" content="#070b17" />
+  <title>Promise Ledger — Collections OS</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="shell">
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+  <div class="ambient ambient-c"></div>
+  <div class="grid-noise"></div>
+
+  <div id="toastHost" class="toast-host"></div>
+  <div id="confettiHost" class="confetti-host" aria-hidden="true"></div>
+
+  <div class="app-shell">
     <aside class="sidebar">
       <div class="brand">
-        <div class="brand-mark">PL</div>
-        <div>
+        <div class="brand-mark"><span>PL</span></div>
+        <div class="brand-copy">
           <strong>Promise Ledger</strong>
-          <span>Collections workspace</span>
+          <span>Collections OS</span>
         </div>
       </div>
 
+      <div class="workspace-chip">
+        <span class="workspace-avatar">PS</span>
+        <div>
+          <strong>Priyanshu's Workspace</strong>
+          <span><i class="online-dot"></i> Live demo</span>
+        </div>
+      </div>
+
+      <p class="nav-label">Workspace</p>
       <nav>
-        <button class="nav-item active" data-filter="all">Overview</button>
-        <button class="nav-item" data-filter="overdue">Overdue</button>
-        <button class="nav-item" data-filter="today">Due today</button>
-        <button class="nav-item" data-filter="upcoming">Upcoming</button>
-        <button class="nav-item" data-filter="paid">Paid</button>
+        <button class="nav-item active" data-filter="all">
+          <span class="nav-icon">⌂</span><span>Overview</span><span class="nav-badge" id="allBadge">0</span>
+        </button>
+        <button class="nav-item" data-filter="overdue">
+          <span class="nav-icon">!</span><span>Overdue</span><span class="nav-badge danger" id="overdueBadge">0</span>
+        </button>
+        <button class="nav-item" data-filter="today">
+          <span class="nav-icon">◷</span><span>Due today</span><span class="nav-badge warn" id="todayBadge">0</span>
+        </button>
+        <button class="nav-item" data-filter="upcoming">
+          <span class="nav-icon">↗</span><span>Upcoming</span><span class="nav-badge" id="upcomingBadge">0</span>
+        </button>
+        <button class="nav-item" data-filter="paid">
+          <span class="nav-icon">✓</span><span>Collected</span><span class="nav-badge success" id="paidBadge">0</span>
+        </button>
       </nav>
 
-      <div class="sidebar-note">
-        <strong>Built for small B2B teams</strong>
-        <p>Turn verbal payment promises into a clear daily follow-up queue.</p>
+      <div class="side-progress">
+        <div class="side-progress-head">
+          <span>Collection health</span>
+          <strong id="healthPercent">0%</strong>
+        </div>
+        <div class="progress-track"><span id="healthBar"></span></div>
+        <p id="healthText">Track promises to build your collection score.</p>
+      </div>
+
+      <div class="sidebar-foot">
+        <div class="kbd-hint"><kbd>N</kbd><span>New promise</span></div>
+        <div class="kbd-hint"><kbd>/</kbd><span>Quick search</span></div>
       </div>
     </aside>
 
     <main class="main">
-      <header class="topbar">
+      <section class="hero reveal">
         <div>
-          <p class="eyebrow">PAYMENT FOLLOW-UP DASHBOARD</p>
-          <h1>Know exactly who to follow up with today.</h1>
+          <div class="hero-kicker">
+            <span class="pulse-dot"></span>
+            <span id="heroDate">LIVE COLLECTION WORKSPACE</span>
+          </div>
+          <h1>Turn payment promises into <span>payments.</span></h1>
+          <p>One clean command center for due dates, follow-ups, commitments and collections.</p>
         </div>
-        <button id="openModalBtn" class="primary-btn">+ Add promise</button>
-      </header>
-
-      <section class="stats" id="stats"></section>
-
-      <section class="toolbar">
-        <div class="search-wrap">
-          <input id="searchInput" type="search" placeholder="Search customer, phone or note..." />
-        </div>
-        <div class="toolbar-actions">
-          <button id="exportBtn" class="ghost-btn">Export CSV</button>
-          <label class="ghost-btn file-label">Import CSV<input id="importInput" type="file" accept=".csv" hidden /></label>
+        <div class="hero-actions">
+          <button id="demoResetBtn" class="ghost-btn icon-text"><span>↻</span> Reset demo</button>
+          <button id="openModalBtn" class="primary-btn shine"><span>＋</span> Add promise</button>
         </div>
       </section>
 
-      <section class="panel">
+      <section class="stats reveal" id="stats"></section>
+
+      <section class="insights-grid reveal">
+        <article class="insight-card performance-card">
+          <div class="card-head">
+            <div>
+              <span class="section-label">COLLECTION PERFORMANCE</span>
+              <h2>Portfolio health</h2>
+            </div>
+            <span class="live-pill"><i></i> Live</span>
+          </div>
+          <div class="performance-body">
+            <div class="ring-wrap">
+              <div class="donut" id="collectionRing">
+                <div class="donut-center">
+                  <strong id="collectionRate">0%</strong>
+                  <span>collected</span>
+                </div>
+              </div>
+            </div>
+            <div class="mini-metrics">
+              <div><span class="metric-dot success"></span><p>Collected</p><strong id="collectedMetric">₹0</strong></div>
+              <div><span class="metric-dot warn"></span><p>Due today</p><strong id="todayMetric">₹0</strong></div>
+              <div><span class="metric-dot danger"></span><p>At risk</p><strong id="riskMetric">₹0</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="insight-card priority-card">
+          <div class="card-head">
+            <div>
+              <span class="section-label">SMART PRIORITY</span>
+              <h2>What needs attention</h2>
+            </div>
+            <span class="spark">✦</span>
+          </div>
+          <div id="priorityList" class="priority-list"></div>
+        </article>
+      </section>
+
+      <section class="toolbar reveal">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input id="searchInput" type="search" placeholder="Search customer, phone, note or invoice..." autocomplete="off" />
+          <kbd>/</kbd>
+        </div>
+        <div class="toolbar-actions">
+          <button id="exportBtn" class="ghost-btn icon-text"><span>⇩</span> Export</button>
+          <label class="ghost-btn file-label icon-text"><span>⇧</span> Import<input id="importInput" type="file" accept=".csv" hidden /></label>
+        </div>
+      </section>
+
+      <section class="panel reveal">
         <div class="panel-head">
           <div>
-            <p class="eyebrow">FOLLOW-UP QUEUE</p>
+            <span class="section-label">FOLLOW-UP QUEUE</span>
             <h2 id="queueTitle">All promises</h2>
           </div>
-          <span id="recordCount" class="pill">0 records</span>
+          <div class="panel-head-right">
+            <span id="recordCount" class="pill">0 records</span>
+            <span class="sync-pill"><i></i> Saved locally</span>
+          </div>
         </div>
 
         <div id="emptyState" class="empty hidden">
-          <div class="empty-icon">₹</div>
-          <h3>No promises here yet</h3>
-          <p>Add a payment commitment to start tracking follow-ups.</p>
+          <div class="empty-orbit"><div class="empty-icon">₹</div></div>
+          <h3>Nothing in this queue</h3>
+          <p>Add a new payment promise or switch to another filter.</p>
+          <button class="primary-btn" id="emptyAddBtn">＋ Add a promise</button>
         </div>
 
         <div id="tableWrap" class="table-wrap">
@@ -76,7 +164,7 @@
                 <th>Amount</th>
                 <th>Promise date</th>
                 <th>Status</th>
-                <th>Last follow-up</th>
+                <th>Last activity</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -84,49 +172,77 @@
           </table>
         </div>
       </section>
+
+      <footer class="footer reveal">
+        <div><strong>Promise Ledger</strong><span>Built as a focused B2B collections workflow demo.</span></div>
+        <span>Node.js • Vanilla JS • Responsive UI • Local persistence</span>
+      </footer>
     </main>
   </div>
 
   <dialog id="promiseModal">
-    <form id="promiseForm" method="dialog" class="modal-card">
+    <form id="promiseForm" class="modal-card">
+      <div class="modal-accent"></div>
       <div class="modal-head">
         <div>
-          <p class="eyebrow">NEW PAYMENT PROMISE</p>
-          <h2>Record commitment</h2>
+          <span class="section-label">NEW PAYMENT PROMISE</span>
+          <h2>Record a commitment</h2>
+          <p>Capture the promise once. The dashboard handles the follow-up priority.</p>
         </div>
-        <button type="button" id="closeModalBtn" class="icon-btn">×</button>
+        <button type="button" id="closeModalBtn" class="icon-btn" aria-label="Close">×</button>
       </div>
 
       <div class="form-grid">
-        <label>Customer name<input id="customer" required maxlength="80" /></label>
-        <label>Phone<input id="phone" maxlength="20" placeholder="+91..." /></label>
-        <label>Amount (₹)<input id="amount" type="number" min="1" step="1" required /></label>
-        <label>Promise date<input id="promiseDate" type="date" required /></label>
+        <label><span>Customer name</span><input id="customer" required maxlength="80" placeholder="e.g. Acme Industries" /></label>
+        <label><span>Phone / WhatsApp</span><input id="phone" maxlength="20" placeholder="+91 98765 43210" /></label>
+        <label><span>Amount (₹)</span><input id="amount" type="number" min="1" step="1" required placeholder="25000" /></label>
+        <label><span>Promise date</span><input id="promiseDate" type="date" required /></label>
       </div>
-      <label>Note<textarea id="note" rows="3" maxlength="300" placeholder="Invoice, reason, next step..."></textarea></label>
+      <label class="full-label"><span>Note / invoice reference</span><textarea id="note" rows="3" maxlength="300" placeholder="Invoice #1042, final website milestone, payment after approval..."></textarea></label>
 
       <div class="modal-actions">
         <button type="button" id="cancelBtn" class="ghost-btn">Cancel</button>
-        <button type="submit" class="primary-btn">Save promise</button>
+        <button type="submit" class="primary-btn shine">Save promise <span>→</span></button>
       </div>
     </form>
   </dialog>
 
   <dialog id="historyModal">
-    <div class="modal-card">
+    <div class="modal-card history-modal-card">
+      <div class="modal-accent"></div>
       <div class="modal-head">
         <div>
-          <p class="eyebrow">FOLLOW-UP HISTORY</p>
+          <span class="section-label">CUSTOMER TIMELINE</span>
           <h2 id="historyTitle">Customer</h2>
+          <p>Every follow-up stays visible in one chronological timeline.</p>
         </div>
-        <button type="button" id="closeHistoryBtn" class="icon-btn">×</button>
+        <button type="button" id="closeHistoryBtn" class="icon-btn" aria-label="Close">×</button>
       </div>
       <div id="historyList" class="history-list"></div>
       <form id="historyForm" class="history-form">
-        <textarea id="historyNote" rows="3" required maxlength="300" placeholder="Called customer; they committed to pay by Friday..."></textarea>
-        <button class="primary-btn" type="submit">Add follow-up note</button>
+        <textarea id="historyNote" rows="3" required maxlength="300" placeholder="Called accounts team — payment expected by Friday..."></textarea>
+        <button class="primary-btn" type="submit">Add follow-up note <span>→</span></button>
       </form>
     </div>
+  </dialog>
+
+  <dialog id="rescheduleModal">
+    <form id="rescheduleForm" class="modal-card small-modal">
+      <div class="modal-accent"></div>
+      <div class="modal-head">
+        <div>
+          <span class="section-label">UPDATE COMMITMENT</span>
+          <h2>Reschedule promise</h2>
+          <p id="rescheduleCustomer">Choose the new committed payment date.</p>
+        </div>
+        <button type="button" id="closeRescheduleBtn" class="icon-btn" aria-label="Close">×</button>
+      </div>
+      <label class="full-label"><span>New promise date</span><input id="rescheduleDate" type="date" required /></label>
+      <div class="modal-actions">
+        <button type="button" id="cancelRescheduleBtn" class="ghost-btn">Cancel</button>
+        <button type="submit" class="primary-btn">Update date</button>
+      </div>
+    </form>
   </dialog>
 
   <script src="app.js"></script>
