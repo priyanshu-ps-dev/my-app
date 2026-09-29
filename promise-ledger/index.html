@@ -3,248 +3,180 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Promise Ledger — a polished B2B payment promise and collections dashboard." />
-  <meta name="theme-color" content="#070b17" />
-  <title>Promise Ledger — Collections OS</title>
+  <meta name="theme-color" content="#081120" />
+  <meta name="description" content="Promise Ledger — payment promise tracking and collections follow-up workspace." />
+  <title>Promise Ledger</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="ambient ambient-a"></div>
-  <div class="ambient ambient-b"></div>
-  <div class="ambient ambient-c"></div>
-  <div class="grid-noise"></div>
+  <div class="bg-orb orb-one"></div>
+  <div class="bg-orb orb-two"></div>
 
-  <div id="toastHost" class="toast-host"></div>
-  <div id="confettiHost" class="confetti-host" aria-hidden="true"></div>
+  <header class="mobile-header">
+    <div class="brand">
+      <div class="brand-mark">PL</div>
+      <div><strong>Promise Ledger</strong><span>Collections workspace</span></div>
+    </div>
+    <button class="icon-button" id="mobileAddBtn" aria-label="Add promise">＋</button>
+  </header>
 
-  <div class="app-shell">
+  <div class="layout">
     <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark"><span>PL</span></div>
-        <div class="brand-copy">
-          <strong>Promise Ledger</strong>
-          <span>Collections OS</span>
-        </div>
+      <div class="brand desktop-brand">
+        <div class="brand-mark">PL</div>
+        <div><strong>Promise Ledger</strong><span>Collections workspace</span></div>
       </div>
 
-      <div class="workspace-chip">
-        <span class="workspace-avatar">PS</span>
-        <div>
-          <strong>Priyanshu's Workspace</strong>
-          <span><i class="online-dot"></i> Live demo</span>
-        </div>
+      <div class="profile-card">
+        <div class="avatar">PS</div>
+        <div><strong>Priyanshu Singh</strong><span><i></i> Demo workspace</span></div>
       </div>
 
-      <p class="nav-label">Workspace</p>
-      <nav>
-        <button class="nav-item active" data-filter="all">
-          <span class="nav-icon">⌂</span><span>Overview</span><span class="nav-badge" id="allBadge">0</span>
-        </button>
-        <button class="nav-item" data-filter="overdue">
-          <span class="nav-icon">!</span><span>Overdue</span><span class="nav-badge danger" id="overdueBadge">0</span>
-        </button>
-        <button class="nav-item" data-filter="today">
-          <span class="nav-icon">◷</span><span>Due today</span><span class="nav-badge warn" id="todayBadge">0</span>
-        </button>
-        <button class="nav-item" data-filter="upcoming">
-          <span class="nav-icon">↗</span><span>Upcoming</span><span class="nav-badge" id="upcomingBadge">0</span>
-        </button>
-        <button class="nav-item" data-filter="paid">
-          <span class="nav-icon">✓</span><span>Collected</span><span class="nav-badge success" id="paidBadge">0</span>
-        </button>
+      <nav class="nav-list" id="desktopNav">
+        <button class="nav-link active" data-filter="all"><span>Overview</span><b id="badge-all">0</b></button>
+        <button class="nav-link" data-filter="overdue"><span>Overdue</span><b id="badge-overdue">0</b></button>
+        <button class="nav-link" data-filter="today"><span>Due today</span><b id="badge-today">0</b></button>
+        <button class="nav-link" data-filter="upcoming"><span>Upcoming</span><b id="badge-upcoming">0</b></button>
+        <button class="nav-link" data-filter="paid"><span>Collected</span><b id="badge-paid">0</b></button>
       </nav>
 
-      <div class="side-progress">
-        <div class="side-progress-head">
-          <span>Collection health</span>
-          <strong id="healthPercent">0%</strong>
-        </div>
-        <div class="progress-track"><span id="healthBar"></span></div>
-        <p id="healthText">Track promises to build your collection score.</p>
-      </div>
-
-      <div class="sidebar-foot">
-        <div class="kbd-hint"><kbd>N</kbd><span>New promise</span></div>
-        <div class="kbd-hint"><kbd>/</kbd><span>Quick search</span></div>
+      <div class="sidebar-tip">
+        <span>Collection health</span>
+        <strong id="healthSidebar">0%</strong>
+        <div class="mini-progress"><i id="healthBar"></i></div>
+        <p>Keep promises visible, follow up on time, close faster.</p>
       </div>
     </aside>
 
-    <main class="main">
-      <section class="hero reveal">
+    <main class="content">
+      <section class="hero entrance">
         <div>
-          <div class="hero-kicker">
-            <span class="pulse-dot"></span>
-            <span id="heroDate">LIVE COLLECTION WORKSPACE</span>
-          </div>
+          <span class="eyebrow"><i class="live-dot"></i> LIVE COLLECTION WORKSPACE</span>
           <h1>Turn payment promises into <span>payments.</span></h1>
-          <p>One clean command center for due dates, follow-ups, commitments and collections.</p>
+          <p>Track commitments, focus on overdue accounts and keep every follow-up in one place.</p>
         </div>
         <div class="hero-actions">
-          <button id="demoResetBtn" class="ghost-btn icon-text"><span>↻</span> Reset demo</button>
-          <button id="openModalBtn" class="primary-btn shine"><span>＋</span> Add promise</button>
+          <button class="secondary-btn" id="resetBtn">Reset demo</button>
+          <button class="primary-btn" id="addBtn">＋ Add promise</button>
         </div>
       </section>
 
-      <section class="stats reveal" id="stats"></section>
+      <section class="filter-strip entrance" id="mobileNav">
+        <button class="filter-chip active" data-filter="all">All <b id="m-badge-all">0</b></button>
+        <button class="filter-chip" data-filter="overdue">Overdue <b id="m-badge-overdue">0</b></button>
+        <button class="filter-chip" data-filter="today">Today <b id="m-badge-today">0</b></button>
+        <button class="filter-chip" data-filter="upcoming">Upcoming <b id="m-badge-upcoming">0</b></button>
+        <button class="filter-chip" data-filter="paid">Paid <b id="m-badge-paid">0</b></button>
+      </section>
 
-      <section class="insights-grid reveal">
-        <article class="insight-card performance-card">
-          <div class="card-head">
-            <div>
-              <span class="section-label">COLLECTION PERFORMANCE</span>
-              <h2>Portfolio health</h2>
-            </div>
+      <section class="stats-grid entrance" id="stats"></section>
+
+      <section class="overview-grid entrance">
+        <article class="glass-card health-card">
+          <div class="section-head">
+            <div><span class="eyebrow">PORTFOLIO HEALTH</span><h2>Collection performance</h2></div>
             <span class="live-pill"><i></i> Live</span>
           </div>
-          <div class="performance-body">
-            <div class="ring-wrap">
-              <div class="donut" id="collectionRing">
-                <div class="donut-center">
-                  <strong id="collectionRate">0%</strong>
-                  <span>collected</span>
-                </div>
-              </div>
-            </div>
-            <div class="mini-metrics">
-              <div><span class="metric-dot success"></span><p>Collected</p><strong id="collectedMetric">₹0</strong></div>
-              <div><span class="metric-dot warn"></span><p>Due today</p><strong id="todayMetric">₹0</strong></div>
-              <div><span class="metric-dot danger"></span><p>At risk</p><strong id="riskMetric">₹0</strong></div>
+          <div class="health-content">
+            <div class="ring" id="healthRing"><div><strong id="healthRate">0%</strong><span>collected</span></div></div>
+            <div class="health-metrics">
+              <div><span>Collected</span><strong id="healthCollected">₹0</strong></div>
+              <div><span>Due today</span><strong id="healthToday">₹0</strong></div>
+              <div><span>At risk</span><strong id="healthRisk">₹0</strong></div>
             </div>
           </div>
         </article>
 
-        <article class="insight-card priority-card">
-          <div class="card-head">
-            <div>
-              <span class="section-label">SMART PRIORITY</span>
-              <h2>What needs attention</h2>
-            </div>
+        <article class="glass-card priority-card">
+          <div class="section-head">
+            <div><span class="eyebrow">SMART PRIORITY</span><h2>Needs attention</h2></div>
             <span class="spark">✦</span>
           </div>
           <div id="priorityList" class="priority-list"></div>
         </article>
       </section>
 
-      <section class="toolbar reveal">
-        <div class="search-box">
-          <span class="search-icon">⌕</span>
-          <input id="searchInput" type="search" placeholder="Search customer, phone, note or invoice..." autocomplete="off" />
-          <kbd>/</kbd>
-        </div>
-        <div class="toolbar-actions">
-          <button id="exportBtn" class="ghost-btn icon-text"><span>⇩</span> Export</button>
-          <label class="ghost-btn file-label icon-text"><span>⇧</span> Import<input id="importInput" type="file" accept=".csv" hidden /></label>
-        </div>
-      </section>
-
-      <section class="panel reveal">
-        <div class="panel-head">
+      <section class="workspace-card entrance">
+        <div class="workspace-toolbar">
           <div>
-            <span class="section-label">FOLLOW-UP QUEUE</span>
+            <span class="eyebrow">FOLLOW-UP QUEUE</span>
             <h2 id="queueTitle">All promises</h2>
           </div>
-          <div class="panel-head-right">
-            <span id="recordCount" class="pill">0 records</span>
-            <span class="sync-pill"><i></i> Saved locally</span>
+          <div class="toolbar-tools">
+            <label class="search-field">
+              <span>⌕</span>
+              <input id="searchInput" type="search" placeholder="Search customer, phone or note..." />
+            </label>
+            <button class="secondary-btn small" id="exportBtn">Export CSV</button>
           </div>
         </div>
 
-        <div id="emptyState" class="empty hidden">
-          <div class="empty-orbit"><div class="empty-icon">₹</div></div>
-          <h3>Nothing in this queue</h3>
-          <p>Add a new payment promise or switch to another filter.</p>
-          <button class="primary-btn" id="emptyAddBtn">＋ Add a promise</button>
-        </div>
+        <div id="recordsList" class="records-list"></div>
 
-        <div id="tableWrap" class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Customer</th>
-                <th>Amount</th>
-                <th>Promise date</th>
-                <th>Status</th>
-                <th>Last activity</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="promiseRows"></tbody>
-          </table>
+        <div class="empty-state hidden" id="emptyState">
+          <div>✓</div>
+          <h3>No promises here</h3>
+          <p>Try another filter or add a new payment promise.</p>
+          <button class="primary-btn" id="emptyAddBtn">Add promise</button>
         </div>
       </section>
 
-      <footer class="footer reveal">
-        <div><strong>Promise Ledger</strong><span>Built as a focused B2B collections workflow demo.</span></div>
-        <span>Node.js • Vanilla JS • Responsive UI • Local persistence</span>
+      <footer>
+        <strong>Promise Ledger</strong>
+        <span>Responsive collections workflow demo · Vanilla JS · Local persistence</span>
       </footer>
     </main>
   </div>
 
   <dialog id="promiseModal">
-    <form id="promiseForm" class="modal-card">
-      <div class="modal-accent"></div>
-      <div class="modal-head">
-        <div>
-          <span class="section-label">NEW PAYMENT PROMISE</span>
-          <h2>Record a commitment</h2>
-          <p>Capture the promise once. The dashboard handles the follow-up priority.</p>
-        </div>
-        <button type="button" id="closeModalBtn" class="icon-btn" aria-label="Close">×</button>
+    <form id="promiseForm" class="modal">
+      <div class="modal-header">
+        <div><span class="eyebrow">NEW PROMISE</span><h2>Record a payment commitment</h2></div>
+        <button type="button" class="icon-button" data-close="promiseModal">×</button>
       </div>
-
       <div class="form-grid">
-        <label><span>Customer name</span><input id="customer" required maxlength="80" placeholder="e.g. Acme Industries" /></label>
-        <label><span>Phone / WhatsApp</span><input id="phone" maxlength="20" placeholder="+91 98765 43210" /></label>
-        <label><span>Amount (₹)</span><input id="amount" type="number" min="1" step="1" required placeholder="25000" /></label>
-        <label><span>Promise date</span><input id="promiseDate" type="date" required /></label>
+        <label>Customer name<input id="customer" required maxlength="80" placeholder="e.g. Apex Traders" /></label>
+        <label>Phone / WhatsApp<input id="phone" maxlength="20" placeholder="+91 98765 43210" /></label>
+        <label>Amount (₹)<input id="amount" type="number" min="1" required placeholder="25000" /></label>
+        <label>Promise date<input id="promiseDate" type="date" required /></label>
       </div>
-      <label class="full-label"><span>Note / invoice reference</span><textarea id="note" rows="3" maxlength="300" placeholder="Invoice #1042, final website milestone, payment after approval..."></textarea></label>
-
+      <label>Note / invoice reference<textarea id="note" rows="3" maxlength="300" placeholder="Invoice #1042, milestone, payment after approval..."></textarea></label>
       <div class="modal-actions">
-        <button type="button" id="cancelBtn" class="ghost-btn">Cancel</button>
-        <button type="submit" class="primary-btn shine">Save promise <span>→</span></button>
+        <button type="button" class="secondary-btn" data-close="promiseModal">Cancel</button>
+        <button class="primary-btn" type="submit">Save promise</button>
       </div>
     </form>
   </dialog>
 
-  <dialog id="historyModal">
-    <div class="modal-card history-modal-card">
-      <div class="modal-accent"></div>
-      <div class="modal-head">
-        <div>
-          <span class="section-label">CUSTOMER TIMELINE</span>
-          <h2 id="historyTitle">Customer</h2>
-          <p>Every follow-up stays visible in one chronological timeline.</p>
-        </div>
-        <button type="button" id="closeHistoryBtn" class="icon-btn" aria-label="Close">×</button>
+  <dialog id="activityModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div><span class="eyebrow">CUSTOMER TIMELINE</span><h2 id="activityTitle">Customer</h2></div>
+        <button type="button" class="icon-button" data-close="activityModal">×</button>
       </div>
-      <div id="historyList" class="history-list"></div>
-      <form id="historyForm" class="history-form">
-        <textarea id="historyNote" rows="3" required maxlength="300" placeholder="Called accounts team — payment expected by Friday..."></textarea>
-        <button class="primary-btn" type="submit">Add follow-up note <span>→</span></button>
+      <div class="timeline" id="timeline"></div>
+      <form id="activityForm" class="activity-form">
+        <textarea id="activityNote" rows="3" maxlength="300" required placeholder="Called accounts team — payment expected tomorrow..."></textarea>
+        <button class="primary-btn" type="submit">Add follow-up note</button>
       </form>
     </div>
   </dialog>
 
-  <dialog id="rescheduleModal">
-    <form id="rescheduleForm" class="modal-card small-modal">
-      <div class="modal-accent"></div>
-      <div class="modal-head">
-        <div>
-          <span class="section-label">UPDATE COMMITMENT</span>
-          <h2>Reschedule promise</h2>
-          <p id="rescheduleCustomer">Choose the new committed payment date.</p>
-        </div>
-        <button type="button" id="closeRescheduleBtn" class="icon-btn" aria-label="Close">×</button>
+  <dialog id="dateModal">
+    <form id="dateForm" class="modal modal-small">
+      <div class="modal-header">
+        <div><span class="eyebrow">RESCHEDULE</span><h2>Update promise date</h2></div>
+        <button type="button" class="icon-button" data-close="dateModal">×</button>
       </div>
-      <label class="full-label"><span>New promise date</span><input id="rescheduleDate" type="date" required /></label>
+      <label>New promise date<input id="newDate" type="date" required /></label>
       <div class="modal-actions">
-        <button type="button" id="cancelRescheduleBtn" class="ghost-btn">Cancel</button>
-        <button type="submit" class="primary-btn">Update date</button>
+        <button type="button" class="secondary-btn" data-close="dateModal">Cancel</button>
+        <button class="primary-btn" type="submit">Update date</button>
       </div>
     </form>
   </dialog>
 
+  <div class="toast-host" id="toastHost"></div>
   <script src="app.js"></script>
 </body>
 </html>
