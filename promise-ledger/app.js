@@ -39,7 +39,7 @@ function saveCache(){
   try{ localStorage.setItem(CACHE_KEY, JSON.stringify(records)); }catch(_){}
 }
 function loadCache(){
-  try{ const x=JSON.parse(localStorage.getItem(CACHE_KEY)||'null'); return Array.isArray(x)&&x.length?x:null; }catch(_){ return null; }
+  try{ const x=JSON.parse(localStorage.getItem(CACHE_KEY)||'null'); return Array.isArray(x)?x:null; }catch(_){ return null; }
 }
 
 async function api(path, options={}){
@@ -339,7 +339,8 @@ $('exportBtn').addEventListener('click',()=>{
   const headers=['customer','phone','amount','promiseDate','note','paid','riskScore'];
   const rows=[headers.join(','),...records.map(r=>headers.map(k=>{
     const value=k==='riskScore'?riskScore(r):(r[k]??'');
-    return `"${String(value).replaceAll('"','""')}"`;
+    const text=String(value), safe=/^[=+@\-\t\r]/.test(text)?"'"+text:text;
+    return '\"'+safe.replaceAll('\"','\"\"')+'\"';
   }).join(','))];
   const blob=new Blob([rows.join('\n')],{type:'text/csv'}), a=document.createElement('a');
   a.href=URL.createObjectURL(blob); a.download='promise-ledger-export.csv'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),500);
