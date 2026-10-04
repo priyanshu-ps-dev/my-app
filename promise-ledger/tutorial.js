@@ -6,7 +6,7 @@
     {
       label: '01 · THE PROBLEM',
       title: 'See the <em>whole collections picture</em> in seconds.',
-      text: 'Promise Ledger turns scattered payment commitments into one focused command center. Outstanding, overdue, due-today and collected amounts are visible immediately.',
+      text: 'Hisaab Saathi turns scattered payment commitments into one focused command center. Outstanding, overdue, due-today and collected amounts are visible immediately.',
       tip: 'Start here: the dashboard tells you what deserves attention before you open any customer record.',
       visual: 'dashboard'
     },
@@ -47,7 +47,7 @@
     },
     {
       label: '07 · READY',
-      title: 'That is <em>Promise Ledger</em>.',
+      title: 'That is <em>Hisaab Saathi</em>.',
       text: 'Add a promise, inspect its risk score, follow up, reschedule it and mark it paid. The goal is simple: fewer missed commitments and faster collections.',
       tip: 'Best demo flow: Add Promise → Focus High Risk → Timeline → Mark Paid.',
       visual: 'success'
@@ -64,7 +64,7 @@
   function visualMarkup(type) {
     if (type === 'dashboard') return `
       <div class="tutorial-phone">
-        <div class="tutorial-mini-top"><div class="tutorial-mini-brand"><div class="tutorial-mini-logo">PL</div><strong>Promise Ledger</strong></div><span class="tutorial-mini-live">● LIVE</span></div>
+        <div class="tutorial-mini-top"><div class="tutorial-mini-brand"><div class="tutorial-mini-logo">HS</div><strong>Hisaab Saathi</strong></div><span class="tutorial-mini-live">● LIVE</span></div>
         <div class="tutorial-mini-grid">
           <div class="tutorial-mini-card"><span>OUTSTANDING</span><strong>₹1.72L</strong><i></i></div>
           <div class="tutorial-mini-card"><span>OVERDUE</span><strong>₹48K</strong><i></i></div>
@@ -128,7 +128,7 @@
       </div>`;
 
     return `
-      <div class="tutorial-phone tutorial-success"><div class="tutorial-success-icon">✓</div><h3>Ready to explore</h3><p>Add a promise → inspect the risk score → open timeline → mark it paid.</p><div class="tutorial-action-card"><span>LIVE PROJECT</span><strong>Promise Ledger v2</strong><span>Full-stack collections intelligence workspace</span></div></div>`;
+      <div class="tutorial-phone tutorial-success"><div class="tutorial-success-icon">✓</div><h3>Ready to explore</h3><p>Add a promise → inspect the risk score → open timeline → mark it paid.</p><div class="tutorial-action-card"><span>LIVE PROJECT</span><strong>Hisaab Saathi v2</strong><span>Full-stack collections intelligence workspace</span></div></div>`;
   }
 
   function buildDialog() {
@@ -138,7 +138,7 @@
     dialog.innerHTML = `
       <div class="tutorial-shell">
         <div class="tutorial-top">
-          <div class="tutorial-brand"><div class="tutorial-brand-icon">▶</div><div><strong>60-second product walkthrough</strong><span>Promise Ledger · interactive tutorial</span></div></div>
+          <div class="tutorial-brand"><div class="tutorial-brand-icon">▶</div><div><strong>60-second product walkthrough</strong><span>Hisaab Saathi · interactive tutorial</span></div></div>
           <button class="tutorial-close" id="tutorialCloseBtn" aria-label="Close tutorial">×</button>
         </div>
         <div class="tutorial-stage">
