@@ -69,7 +69,7 @@ function normalizeRecord(input) {
 function readStore() {
   try {
     const parsed = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
-    if (Array.isArray(parsed) && parsed.length) return parsed.map(normalizeRecord);
+    if (Array.isArray(parsed)) return parsed.map(normalizeRecord);
   } catch (_) {}
   const seeded = seedData();
   try { fs.writeFileSync(DATA_FILE, JSON.stringify(seeded, null, 2)); } catch (_) {}
@@ -127,13 +127,19 @@ function parseBody(req) {
   });
 }
 
+function validDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return false;
+  const date = new Date(value + 'T00:00:00Z');
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
 function validatePromise(body) {
   const customer = String(body.customer || '').trim();
   const amount = Number(body.amount);
   const promiseDate = String(body.promiseDate || '');
   if (!customer) return 'Customer name is required.';
   if (!Number.isFinite(amount) || amount <= 0) return 'Amount must be greater than zero.';
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(promiseDate)) return 'Promise date must be YYYY-MM-DD.';
+  if (!validDate(promiseDate)) return 'Promise date must be YYYY-MM-DD.';
   return null;
 }
 
@@ -239,7 +245,8 @@ async function handleApi(req, res, pathname) {
 
     if (req.method === 'PATCH') {
       const body = await parseBody(req);
-      if (body.promiseDate !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(String(body.promiseDate))) {
+      if (body.customer !== undefined && !String(body.customer).trim()) return json(res, 422, { error: 'Customer name is required.' });
+      if (body.promiseDate !== undefined && !validDate(String(body.promiseDate))) {
         return json(res, 422, { error: 'Invalid promise date.' });
       }
       if (body.amount !== undefined && (!Number.isFinite(Number(body.amount)) || Number(body.amount) <= 0)) {
@@ -292,6 +299,11 @@ async function handleApi(req, res, pathname) {
 }
 
 function serveStatic(req, res, pathname) {
+  const publicFiles = new Set(['/','/index.html','/app.js','/styles.css','/tutorial.js','/tutorial.css']);
+  if (!publicFiles.has(pathname)) {
+    res.writeHead(404, { ...securityHeaders(), 'Content-Type': 'text/plain; charset=utf-8' });
+    return res.end('Not found');
+  }
   let requestPath = pathname === '/' ? '/index.html' : pathname;
   const normalized = path.normalize(requestPath).replace(/^([.][.][/\\])+/, '');
   const relative = normalized.replace(/^[/\\]+/, '');
@@ -349,3 +361,4 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Promise Ledger v2 running on port ${PORT}`);
 });
+

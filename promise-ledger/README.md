@@ -1,11 +1,11 @@
-# Promise Ledger v2
+# Hisaab Saathi v2
 
-Promise Ledger is a full-stack B2B collections intelligence workspace for turning verbal payment commitments into an actionable follow-up queue.
+Hisaab Saathi is a full-stack B2B collections intelligence workspace for turning verbal payment commitments into an actionable follow-up queue.
 
 **Live demo:** https://promise-ledger-priyanshu.onrender.com
 
 ## Why this project exists
-Small B2B teams often track payment promises in WhatsApp, spreadsheets and memory. Promise Ledger centralizes the commitment, due date, follow-up timeline, payment state and recovery priority in one place.
+Small B2B teams often track payment promises in WhatsApp, spreadsheets and memory. Hisaab Saathi centralizes the commitment, due date, follow-up timeline, payment state and recovery priority in one place.
 
 ## Product capabilities
 - Server-backed payment promise records
